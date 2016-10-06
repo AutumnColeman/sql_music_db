@@ -335,4 +335,8 @@ VALUES
 
 -- What are tracks for a given album?
 select * from album, track where album.id = track.album_id and album.name = 'Earthlings';
+
 -- What instruments does each artist play?
+
+-- What is the track with the longest duration?
+select artist.name, track.name, max(track_length) from artist, track where artist.id = track.artist_id group by artist.name, track.name, track.track_length order by track.track_length desc limit 1;
