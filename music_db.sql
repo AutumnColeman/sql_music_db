@@ -335,32 +335,37 @@ VALUES
 
 
 
--- What are tracks for a given album?
+-- 1 What are tracks for a given album?
 select * from album, track where album.id = track.album_id and album.name = 'Earthlings';
 
--- What instruments does each artist play?
+-- 2 What instruments does each artist play?
 
--- What is the track with the longest duration?
+-- 3 What is the track with the longest duration?
 select artist.name as "Artist", track.name as "Track", max(track_length) as "Longest Track" from artist, track where artist.id = track.artist_id group by artist.name, track.name, track.track_length order by track.track_length desc limit 1;
 
 
--- What are the albums released in the 60s? 70s? 80s? 90s?
+-- 4 What are the albums released in the 60s? 70s? 80s? 90s?
 select artist.name as "Artist", album.name as "Album", album.release_year as "Year" from album, artist where artist.id = album.artist_id and album.release_year between 1970 and 1979;
 
--- How many albums did a given artist produce in the 90s?
+-- 5 How many albums did a given artist produce in the 90s?
 select artist.name as "Artist", album.name as "Album", album.release_year as "Year" from artist, album where artist.id = album.artist_id and album.release_year between 1990 and 1999 and artist.name = 'Nirvana';
 
--- What is the total run time of each album (based on the duration of its tracks)?
+-- 6 What is the total run time of each album (based on the duration of its tracks)?
+select artist.name, track.name from artist, track where artist.id = track.artist_id and artist.name = 'David Bowie';
 
--- What are all the tracks a given artist has recorded?
 
--- What are the albums recorded by only one solo artist?
+-- 7 What are all the tracks a given artist has recorded?
+select artist.name as "Artist", track.name as "Tracks" from artist, track where artist.id = track.artist_id and artist.name = 'David Bowie';
 
--- What are the albums produced by a given artist as the lead artist?
+-- 8 What are the albums recorded by only one solo artist?
+select count, album_name, name from (select count(members.id), album.name as album_name, artist.name from album, artist, members, performers where artist.id = performers.artist_id and members.id = performers.members_id and album.artist_id = artist.id group by album.id, artist.id) as member_count_by_album where count = 1;
 
--- What albums has a given artist participated in (not necessarily as lead artist).
 
--- Who are the 5 most prolific artists based on the number of albums they have participated in.
+-- 9 What are the albums produced by a given artist as the lead artist?
+
+-- 10 What albums has a given artist participated in (not necessarily as lead artist).
+
+-- 11 Who are the 5 most prolific artists based on the number of albums they have participated in.
 
 -- What are the albums where the lead artist is a pianist (or any instrument of your choice)?
 
